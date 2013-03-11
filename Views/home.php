@@ -13,6 +13,7 @@ session_start();
 	<ul>
 		<li><a href="consult.php">Calcular</a>
 		</li>
+		<li><a href="../test/test.php">Clear Data Test</a></li>
 	</ul>
 
 

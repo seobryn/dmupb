@@ -1,7 +1,5 @@
 <?php
+class Algorithm{
 
-class Algorithm {
-
-	
-	
 }
+?>

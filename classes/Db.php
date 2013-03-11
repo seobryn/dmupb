@@ -5,7 +5,7 @@
 //DB CONECTION
 function dbConnection(){
 
-	$con = mysql_connect("127.0.0.1", "root", "1098739898-")or die("cannot connect");
+	$con = mysql_connect("localhost", "root", "1098739898-")or die("cannot connect");
 	mysql_select_db("int2013")or die("cannot select DB");
 	
 	

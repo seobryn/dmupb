@@ -15,7 +15,7 @@ function loginQuery($acc, $pss){
 	$password = mysql_real_escape_string($password);
 
 	$sql = "SELECT account, password
-			FROM User
+			FROM user
 			WHERE account='".$account."' AND password='".$password."'";
 	$result = mysql_query($sql);
 	$count=mysql_num_rows($result);
