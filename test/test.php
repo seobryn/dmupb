@@ -1,3 +1,4 @@
+<!-- THIS PAGE IS ONLY FOR TEST -->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -11,6 +12,7 @@
 			name="send" value="test">
 	</form>
 	<?php
+	echo "<a href='../views/home.php'>Go Home</a>";
 	if(isset($_POST) && !empty($_POST)){
 		include_once '../classes/Patient.class.php';
 		include_once '../classes/Utils.class.php';
@@ -18,7 +20,7 @@
 		$patients = array();
 		while (!feof($file)){
 			$line = fgets($file);
-			if(!(substr($line,0,1)=="@")){
+			if(!(substr($line,0,1)=="@") or !(substr($line,0,1)=="%")){
 				$patient = new Patient();
 				$tmp = explode(',',$line);
 				$patient->setAge(trim($tmp[0]));
@@ -119,7 +121,7 @@
 				if($row->getThal()=="?"){
 					$row->setThal(Utils::predict('thal',$patients,$row->getNum()));
 				}
-			
+					
 				echo $row->getAge().",".$row->getSex().",".$row->getCp().",".$row->getTrestbps().",".$row->getChol().",".
 						$row->getFbs().",".$row->getRestecg().",".$row->getThalach().",".$row->getExang().",".$row->getOldpeak().",".
 						$row->getSlope().",".$row->getCa().",".$row->getThal().",".$row->getNum()." <br />";

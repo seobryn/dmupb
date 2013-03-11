@@ -1,9 +1,7 @@
 <?php
+//THIS IS A DB CONNECTION FOR LOGIN PAGE
 
 include '../classes/Db.php';
-
-
-// http://www.phpeasystep.com/phptu/6.html
 function loginQuery($acc, $pss){
 
 	dbConnection();
@@ -24,7 +22,7 @@ function loginQuery($acc, $pss){
 		session_start();
 		$_SESSION['account'] = $account;
 
-		header('Location: ../Views/home.php');
+		header('Location: ../views/home.php');
 
 	}else {
 		echo 'Wrong Account or Password';

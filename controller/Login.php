@@ -9,5 +9,3 @@ $password = $_POST['pss_inp'];
 
 
 loginQuery($account, $password);
-
-//loginQuery($account, $password);

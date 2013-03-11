@@ -1,7 +1,11 @@
 <?php
+//THIS CLASS IS FOR UTILITIES, CONVERSIONS AND CALCULATE DISTANCES
 class Utils{
 
+	//this method calculate the euclidean distances between two vectors with same length
 	public static function calculate_euclidean($vector1,$vector2){
+		
+		//validate if lenghts are equals
 		if(Utils::validate_size($vector1,$vector2)){
 			return "ERROR: Vectors should be of equal length: vector1=".sizeof($vector1)." vector2=".sizeof($vector2);
 		}
@@ -13,8 +17,9 @@ class Utils{
 		unset($temp);
 		return sqrt($output);
 	}
-
+	//this method calculate the square euclidean distances between two vectors with same length
 	public static function calculate_qeuclidean($vector1,$vector2){
+		//validate if lenghts are equals
 		if(Utils::validate_size($vector1,$vector2)){
 			return "ERROR: Vectors should be of equal length: vector1=".sizeof($vector1)." vector2=".sizeof($vector2);
 		}
@@ -26,8 +31,9 @@ class Utils{
 		unset($temp);
 		return $output;
 	}
-
+	//this method calculate the manhathan distances between two vectors with same length
 	public static function calculate_manhathan($vector1,$vector2){
+		//validate if lengths are equals
 		if(Utils::validate_size($vector1,$vector2)){
 			return "ERROR: Vectors should be of equal length: vector1=".sizeof($vector1)." vector2=".sizeof($vector2);
 		}
@@ -37,7 +43,8 @@ class Utils{
 		return $output;
 	}
 
-	public static function predict($field /*name of Field*/,$array_registers /*type: patient*/,$predictor){
+	//this method predicts a value of an incomplete register, taking into consideration a predictor value
+	public static function predict($field /*name of Field*/,$array_registers /*type: patient*/,$predictor/*predictor field*/){
 		switch ($field){
 			case 'age' :
 				foreach ($array_registers as $comparator){
@@ -132,10 +139,9 @@ class Utils{
 				break;
 			default:
 				return "?";
-				break;
 		}
 	}
-
+	//this method compare the size of two vectors, if it equals return true otherwise return false
 	private static function validate_size($v1,$v2){
 		if(sizeof($v1)!= sizeof($v2)){
 			return true;

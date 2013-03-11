@@ -1,10 +1,11 @@
 <?php
 session_start();
 ?>
+<!-- THIS PAGE IS A VIEW OF CONSULT, CONTAINS A FILTER PARAMETERS (FOR APPLYED ALGORITHM) -->
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>

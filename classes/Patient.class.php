@@ -1,5 +1,5 @@
 <?php
-
+//THIS CLASS IS FOR PATIENT INSTANCES
 class Patient {
 
 	private $age;
@@ -17,7 +17,7 @@ class Patient {
 	private $thal;
 	private $num;
 
-
+	//CONSTRUCTOR OF PATIENT
 	public function Patient(){
 
 	}
