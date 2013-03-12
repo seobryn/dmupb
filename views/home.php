@@ -19,7 +19,6 @@ session_start();
 		<li><a href="consult.php">Calculate</a>
 		</li>
 		<li><a href="../test/test.php">Clean Data (only for test)</a></li>
-		<li><a href="../test/test_distances.php">Distances (only for test)</a></li>
 	</ul>
 
 
