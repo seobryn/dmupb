@@ -141,6 +141,51 @@ class Utils{
 				return "?";
 		}
 	}
+	//this method clean de impure data set
+	public static function clean_data($array_patients){
+		foreach ($array_patients as $data){
+			if($data->getAge()=="?"){
+				$data->setAge(Utils::predict('age',$array_patients,$data->getNum()));
+			}
+			if($data->getSex()=="?"){
+				$data->setSex(Utils::predict('sex',$array_patients,$data->getNum()));
+			}
+			if($data->getCp()=="?"){
+				$data-setCp(Utils::predict('cp',$array_patients,$data->getNum()));
+			}
+			if($data->getTrestbps()=='?'){
+				$data->setTrestbps(Utils::predict('trestbps',$array_patients,$data->getNum()));
+			}
+			if($data->getChol()=="?"){
+				$data->setChol(Utils::predict('chol',$array_patients,$data->getNum()));
+			}
+			if($data->getFbs()=="?"){
+				$data->setFbs(Utils::predict('fbs',$array_patients,$data->getNum()));
+			}
+			if($data->getRestecg()=="?"){
+				$data->setRestecg(Utils::predict('restecg',$array_patients,$data->getNum()));
+			}
+			if($data->getThalach()=="?"){
+				$data->setThalach(Utils::predict('thalach',$array_patients,$data->getNum()));
+			}
+			if($data->getExang()=="?"){
+				$data->setExang(Utils::predict('exang',$array_patients,$data->getNum()));
+			}
+			if($data->getOldpeak()=="?"){
+				$data->setOldpeak(Utils::predict('oldpeak',$array_patients,$data->getNum()));
+			}
+			if($data->getSlope()=="?"){
+				$data->setSlope(Utils::predict('slope',$array_patients,$data->getNum()));
+			}
+			if($data->getCa()=="?"){
+				$data->setCa(Utils::predict('ca',$array_patients,$data->getNum()));
+			}
+			if($data->getThal()=="?"){
+				$data->setThal(Utils::predict('thal',$array_patients,$data->getNum()));
+			}
+		}
+		return $array_patients;
+	}
 	//this method compare the size of two vectors, if it equals return true otherwise return false
 	private static function validate_size($v1,$v2){
 		if(sizeof($v1)!= sizeof($v2)){

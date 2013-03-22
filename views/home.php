@@ -1,7 +1,8 @@
 <?php
 //Start User Session
 session_start();
-?>
+if(isset($_SESSION) && !empty($_SESSION)){
+	?>
 <!-- THIS IS A HOME PAGE, FOR REGISTER USERS -->
 <!DOCTYPE html>
 <html>
@@ -27,3 +28,8 @@ session_start();
 	</form>
 </body>
 </html>
+<?php
+}else{
+	echo "<h2>you don't have permission for visit this link</h2>";
+}
+?>

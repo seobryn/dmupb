@@ -1,6 +1,7 @@
 <?php
 session_start();
-?>
+if(isset($_SESSION) && !empty($_SESSION)){
+	?>
 <!-- THIS PAGE IS A VIEW OF CONSULT, CONTAINS A FILTER PARAMETERS (FOR APPLYED ALGORITHM) -->
 <!DOCTYPE html>
 <html>
@@ -109,3 +110,8 @@ session_start();
 	</form>
 </body>
 </html>
+<?php
+}else{
+	echo "<h2>you don't have permission for visit this link</h2>";
+}
+?>
