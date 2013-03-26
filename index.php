@@ -3,6 +3,8 @@
 if(isset($_POST) && !empty($_POST)) {
 	session_start();
 	session_destroy();
+	include_once 'classes/Login.class.php';
+	Login::logout();
 }
 
 ?>
