@@ -3,7 +3,7 @@ include_once 'Data.class.php';
 class FileRead{
 
 	private $data_types;
-	
+
 	public function FileRead(){
 		$this->data_types = array();
 	}
@@ -13,9 +13,9 @@ class FileRead{
 		$file=fOpen($file_arff,"r") or exit("Unable to open the file!");
 		$data_set = array();
 		$param = array();
+		$n=0;
 		while (!feof($file)){
-			$line = fgets($file);
-			$data = new Data($predict_data);
+			$line = fgets($file);				
 			if(!(substr($line,0,1)=="%") && (trim($line)!="")){
 				if(substr($line,0,1)=="@"){
 					if(strtolower(substr($line,0,10))=="@attribute"){
@@ -31,6 +31,7 @@ class FileRead{
 				}else{
 					$i=0;
 					$attributes = explode(",",$line);
+					$data = new Data($predict_data,$n++);
 					foreach ($param as $value){
 						$tmp = str_replace("'","",$attributes[$i]);
 						$tmp = str_replace("\"","",$tmp);

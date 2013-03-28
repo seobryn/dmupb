@@ -18,25 +18,15 @@
 		include_once '../classes/Data.class.php';
 		include_once '../classes/Utils.class.php';
 		include_once '../classes/FileRead.class.php';
+		include_once '../classes/Kmodes_algorithm.class.php';
 		$temp = new FileRead();
 		$array_data = $temp->read($_FILES['file_path']['tmp_name'],$_POST["txt_predict"]);
 		$array_data = Utils::clean_data($array_data);
 		$types = $temp->getDataTypes();
 		$pl = $array_data[0]->getParameters();
-		$i=0;
-		echo "<hr>";
-		foreach ($pl as $paramet){
-				echo $paramet." => ".$types[$i++]."<br />";
-		}
-		echo "<hr>";
-		foreach ($array_data as $key=>$value){
-			echo ($key+1)." => ";
-			$pl = $value->getParameters();
-			foreach ($pl as $paramet){
-					echo $value->getParameter($paramet)." ";
-				}
-				echo "<br/>";
-		}
+		$km_alg = new Kmodes($array_data,10,2);
+		$test = $km_alg->start_algorithm();
+
 	}
 	?>
 </body>
