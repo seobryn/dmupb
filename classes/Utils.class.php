@@ -4,7 +4,8 @@ class Utils{
 
 	public static function levenshtein_distance($vector1/*Type Data*/,$vector2/*Type Data*/){
 		if(Utils::validate_size($vector1->getParameters(),$vector2->getParameters())){
-			return "ERROR: cluster must have the same dimension";
+			echo "ERROR: cluster must have the same dimension";
+			exit();
 		}			
 		$iterator = $vector1->getParameters();
 		$result=0;

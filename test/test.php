@@ -24,9 +24,20 @@
 		$array_data = Utils::clean_data($array_data);
 		$types = $temp->getDataTypes();
 		$pl = $array_data[0]->getParameters();
-		$km_alg = new Kmodes($array_data,10,2);
+		$km_alg = new Kmodes($array_data,10,4);
 		$test = $km_alg->start_algorithm();
-
+		echo "<h2>Centroids: </h2>";
+		foreach ($test['centroids'] as $centroids){
+			var_dump($centroids);
+			echo "<br/><br/>";
+		}
+		echo "<h2>Values</h2>";
+		$i=0;
+		foreach ($test['clusters'] as $values){
+			echo "<h3>Cluster ".++$i.":</h3><br/>";
+			var_dump($values);
+			echo "<br/><br/>";
+		}
 	}
 	?>
 </body>
