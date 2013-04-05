@@ -31,12 +31,14 @@
 			var_dump($centroids);
 			echo "<br/><br/>";
 		}
-		echo "<h2>Values</h2>";
+		echo "<h2>Values for each Cluster</h2>";
 		$i=0;
 		foreach ($test['clusters'] as $values){
 			echo "<h3>Cluster ".++$i.":</h3><br/>";
-			var_dump($values);
-			echo "<br/><br/>";
+			foreach ($values as $val){
+				var_dump($val);
+				echo "<br/><br/>";
+			}
 		}
 	}
 	?>
