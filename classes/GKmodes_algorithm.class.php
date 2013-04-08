@@ -1,6 +1,6 @@
 <?php
 //THIS CLASS IS FOR KMEANS ALGORITHM
-class Kmodes {
+class GKmodes {
 
 	private $data; 			//all data set
 	private $iterations;	//number of max iterations
@@ -10,7 +10,7 @@ class Kmodes {
 	private $chaged;		//boolean flag
 
 	//CONSTRUCTOR OF K-MODES ALGORITHM
-	public function Kmodes($data_set/*data set read by archive file*/,$max_iterations/*max cycles*/,$k/*number of centroids*/){
+	public function GKmodes($data_set/*data set read by archive file*/,$max_iterations/*max cycles*/,$k/*number of centroids*/){
 		if(!isset($data_set)){
 			echo "ERROR: Data set is necessary to run the algorithm.<br/>Please, Try again with all required data.";
 			exit();
@@ -73,7 +73,6 @@ class Kmodes {
 	}
 
 	private function update_centroids($map,$k){
-		//METOTH FOR VERIFY
 		$centroids = array();
 		$distances = array();
 		foreach ($map as $dat=>$centroid){
@@ -127,17 +126,41 @@ class Kmodes {
 			$it++;
 		}
 	}
-	
+
 	private function prepare_results($map,$data){
 		$this->result['centroids'] = array();
 		$counts = array_count_values($map);
 		$this->result['clusters'] = array();
 		foreach ($counts as $key=>$val){
-			$this->result['centroids'][$key] = $this->centroids[$key];			
+			$this->result['centroids'][$key] = $this->centroids[$key];
 		}
 		foreach ($map as $id_dat=>$id_centroid){
 			$this->result['clusters'][$id_centroid][$id_dat] = $this->data[$id_dat];
 		}
+		$final = $this->generateIndexes($map);
+		$this->result['index_inter'] = $final[0];
+		$this->result['indexes'] = $final[1];
 		return $this->result;
+	}
+
+	private function generateIndexes($map){
+		$counters = array_count_values($map);
+		$indexes = array();
+		foreach ($map as $data_id => $centroid_id){
+			$indexes[$centroid_id] += Utils::levenshtein_distance($this->data[$data_id],$this->centroids[$centroid_id]);
+		}
+		foreach($indexes as $centroid_id=>$prom){
+			$indexes[$centroid_id] = $prom/$counters[$centroid_id];
+		}
+		$total = array();
+		$total[0] = $indexes;
+		$indexes = array();
+		for($i=0;$i<sizeof($this->centroids)-1;$i++){
+			for($j=$i+1;$j<sizeof($this->centroids);$j++){
+				$indexes[$i][$j] = Utils::levenshtein_distance($this->centroids[$i], $this->centroids[$j]);
+			}
+		}
+		$total[1] = $indexes;
+		return $total;
 	}
 }
