@@ -19,12 +19,13 @@
 		include_once '../classes/Utils.class.php';
 		include_once '../classes/FileRead.class.php';
 		include_once '../classes/GKmodes_algorithm.class.php';
+		include_once '../classes/Algorithm.class.php';
 		$temp = new FileRead();
 		$array_data = $temp->read($_FILES['file_path']['tmp_name'],$_POST["txt_predict"]);
 		$array_data = Utils::clean_data($array_data);
 		$types = $temp->getDataTypes();
 		$pl = $array_data[0]->getParameters();
-		$km_alg = new GKmodes($array_data,40,4);
+		$km_alg = new Algorithm($array_data,80, 4);
 		$test = $km_alg->start_algorithm();
 		echo "<h2>Centroids: </h2>";
 		foreach ($test['centroids'] as $centroids){
@@ -40,8 +41,6 @@
 				echo "<br/><br/>";
 			}
 		}
-		var_dump($test['index_inter']);
-		echo "<br/><br/>";
 		var_dump($test['indexes']);
 	}
 	?>

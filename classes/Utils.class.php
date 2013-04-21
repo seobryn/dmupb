@@ -6,15 +6,15 @@ class Utils{
 		if(Utils::validate_size($vector1->getParameters(),$vector2->getParameters())){
 			echo "ERROR: cluster must have the same dimension";
 			exit();
-		}			
+		}
 		$iterator = $vector1->getParameters();
 		$result=0;
 		foreach ($iterator as $index){
 			$result+= levenshtein($vector1->getParameter($index),$vector2->getParameter($index));
-		}		
+		}
 		return $result/sizeof($iterator);
 	}
-	
+
 	//this method compare the size of two vectors, if it equals return true otherwise return false
 	private static function validate_size($v1,$v2){
 		if(sizeof($v1)!= sizeof($v2)){
@@ -46,6 +46,19 @@ class Utils{
 			}
 		}
 		return $array_data;
+	}
+
+	public static function modified_distance($vector1,$vector2){
+		if(Utils::validate_size($vector1->getParameters(),$vector2->getParameters())){
+			echo "ERROR: cluster must have the same dimension";
+			exit();
+		}
+		$iterator = $vector1->getParameters();
+		$result=array();
+		foreach ($iterator as $index){
+			array_push($result,levenshtein($vector1->getParameter($index),$vector2->getParameter($index)));
+		}
+		return $result;
 	}
 }
 ?>
