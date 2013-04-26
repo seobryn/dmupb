@@ -25,7 +25,7 @@
 		$array_data = Utils::clean_data($array_data);
 		$types = $temp->getDataTypes();
 		$pl = $array_data[0]->getParameters();
-		$km_alg = new Algorithm($array_data,80, 4);
+		$km_alg = new GKmodes($array_data,50, 6);
 		$test = $km_alg->start_algorithm();
 		echo "<h2>Centroids: </h2>";
 		foreach ($test['centroids'] as $centroids){
@@ -42,6 +42,8 @@
 			}
 		}
 		var_dump($test['indexes']);
+		echo "<br /><br /><br /><br />";
+		var_dump($test['index_inter']);
 	}
 	?>
 </body>
