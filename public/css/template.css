@@ -1,0 +1,250 @@
+@CHARSET "UTF-8";
+
+body {
+	text-align: center;
+	font-family: 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+	color: #666666;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+p {
+	text-align: justify;
+	font-size: 16px;
+}
+
+table {
+	margin: auto;
+}
+
+input {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: 1px solid #ADADAD;
+	color: #666666;
+}
+
+select {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: 1px solid #ADADAD;
+	color: #666666;
+}
+
+h2 {
+	color: white;
+	font-size: 66px;
+	line-height: 66px;
+	font-weight: 400;
+}
+
+h3 {
+	font-size: 22px;
+	font-weight: normal;
+	color: #277BA4;
+}
+
+.h_no_padding {
+	padding-top: 0px;
+	margin-top: 15px;
+	text-align: left;
+}
+
+.btn {
+	background: -webkit-linear-gradient(top, #78bfe8, #57a7d3 50%, #57a7d3 51%, #3f96c3);
+	height: 35px;
+	font-size: 15px;
+	line-height: 17px;
+	padding: 2px 40px;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.btn_over {
+	background: -webkit-linear-gradient(top, #BDE7FF, #7DBFE3 50%, #7DBFE3 51%, #5FAACF);
+	height: 35px;
+	font-size: 15px;
+	line-height: 17px;
+	padding: 2px 40px;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#btn_login {
+	margin-left: 216px;
+}
+
+#btn_reg {
+	margin-left: 193px;
+}
+
+#btn_cons {
+	margin-left: 215px;
+}
+
+.btn input {
+	cursor: pointer;
+}
+
+.header {
+	position: relative;
+	width: 100%;
+	min-height: 0;
+	left: 0;
+	top: 0;
+	-webkit-transform: translateZ(0);
+	height: 120px;
+	margin: auto;
+	background-color: #242424;
+	top: 0;
+}
+
+.header table {
+	margin: 0px auto;
+	padding: 0px;
+}
+
+#login_header {
+	background-color: transparent;
+}
+
+.header .logo_header {
+	position: relative;
+	width: 400px;
+	height: auto;
+}
+
+.header_right {
+	position: relative;
+	width: 600px;
+	height: 120px;
+}
+
+.header_right p {
+	font-size: 14px;
+	padding: 0px;
+	margin-top: 10px;
+	color: #9EDFFF;
+	text-align: right;
+}
+
+.usr_name {
+	color: #FAFAFA;
+}
+
+.header .header_right .usr_log {
+	position: relative;
+	width: 600px;
+	height: 60px;
+}
+
+.header .header_right .navbar {
+	position: relative;
+	width: 100%;
+	height: 60px;
+	margin-top: 0px;
+	font-family: 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+	text-align: right;
+}
+
+.navbar table {
+	position: relative;
+	margin-top: 20px;
+	margin-right: 0px;
+	text-align: left;
+}
+
+.navbar a {
+	color: white;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+}
+
+.navbar a:hover {
+	color: #19E8FF;
+}
+
+body .content {
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin: auto;
+	padding-top: 25px;
+}
+
+#login_table {
+	padding-top: 50px;
+}
+
+/* LOGIN */
+.content .login_left {
+	position: relative;
+	width: 400px;
+	height: auto;
+}
+
+.content .login_right {
+	position: relative;
+	width: 400px;
+	height: auto;
+	text-align: left;
+	font-size: 18px;
+}
+
+.content .login_right .login_inp {
+	width: 99%;
+	height: 30px;
+	font-size: 18px;
+	text-indent: 10px;
+	color: #43434;
+}
+
+.content .login_right a:hover {
+	color: #242424;
+}
+
+.content .login_right ul,li {
+	display: block;
+	list-style: none;
+}
+
+.content .login_right li {
+	position: relative;
+	margin-bottom: 20px;
+	overflow: auto;
+	margin-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+.register {
+	display: block;
+	text-decoration: none;
+	font-size: 12px;
+	color: #b3b3b3;
+	margin-left: 290px;
+}
+
+.footer {
+	position: relative;
+	width: 100%;
+	height: 200px;
+	margin: auto;
+	background-color: #EDEDED;
+	padding-top: 50px;
+}
+
+.footer p {
+	font-size: 14px;
+	text-align: center;
+}
+
+#login_footer_p {
+	margin-top: 100px;
+}
