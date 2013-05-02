@@ -6,14 +6,32 @@ class Consult_Controller extends View_Controller {
 	public function __construct($args) {
 		$ids = array("header"=>'',"content"=>'',"footer"=>'login_footer_p');
 		parent::__construct($ids);
-		$this->setNameHtml("");
+		$this->setNameHtml("DMUPB Workspace");
 		$this->setIndexHtml('../application/view/index/index.php');
 		$this->setMetaHtml('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">');
-		$this->setCssHtml('<link rel="stylesheet" type="text/css" href="css/template.css" media="all"/>');
+		$this->setCssHtml('<link rel="stylesheet" type="text/css" href="css/template.css" media="all"/><link rel="stylesheet" type="text/css" href="css/tab.css" media="all" />');
 		$this->setHeader("../application/view/content/header.php");
 		$this->setContent("../application/view/content/consult.php");
 		$this->setFooter("../application/view/content/footer.php");
-		$this->setJavascript('');
+		$this->setJavascript('<script src="js/jquery.js"></script><script src="js/jquery.min.js"></script><script src="js/jTabs.js"></script><script type="text/javascript">
+
+				$(document).ready(function(){
+
+				$(".slidingDiv").hide();
+				$(".show_hide").show();
+					
+				$(".show_hide").click(function(){
+				$(".slidingDiv").slideToggle();
+
+
+	});
+
+	});
+
+				</script><script>
+				$(document).ready(function(){
+				$("ul.tabs").jTabs({content: ".tabs_content"});});
+				</script>');
 		$this->results = array();
 	}
 
@@ -26,7 +44,7 @@ class Consult_Controller extends View_Controller {
 		$array_data = $temp_file->read($_FILES['file_inp']['tmp_name'],"num");
 		$array_data = Utils::clean_data($array_data);
 		$alg = $_POST['alg_inp'];
-		$algorithm = new $alg($array_data,40,4);
+		$algorithm = new $alg($array_data,40,6);
 		$this->results = $algorithm->start_algorithm();
 		return $this->deploy();
 	}

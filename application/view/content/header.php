@@ -11,7 +11,7 @@
 				<div class="navbar">
 					<table>
 						<tr>
-							<?php if(empty($_SESSION)){?>
+							<?php if(empty($_SESSION['account'])){?>
 							<td><a href="index.php?controller=login">INGRESAR</a>
 							</td>
 							<?php }?>
@@ -22,11 +22,11 @@
 							</td>
 							<?php }?>
 							<?php if($_SESSION['usr_type']=='admin'){?>
-							<td><a href="index.php?controller=cpanel">USUARIOS</a> <?php }?>
+							<td><a href="index.php?controller=register">REGISTRO</a> <?php }?>
 							</td>
 							<td><a href="index.php?controller=docs">DOCUMENTACIÓN</a>
 							</td>
-							<?php if(isset($_SESSION) && !empty($_SESSION)){?>
+							<?php if(isset($_SESSION['account']) && !empty($_SESSION['account'])){?>
 							<td><a href="index.php?controller=login&method=logout">SALIR</a>
 							</td>
 							<?php }?>

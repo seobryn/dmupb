@@ -3,7 +3,7 @@ class Home_Controller extends View_Controller {
 
 	public function __construct($args) {
 		parent::__construct($ids);
-		$this->setNameHtml("");
+		$this->setNameHtml("DMUPB Home");
 		$this->setIndexHtml('../application/view/index/index.php');
 		$this->setMetaHtml('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">');
 		$this->setCssHtml('<link rel="stylesheet" type="text/css" href="css/template.css" media="all"/><link rel="stylesheet" href="css/responsiveslides.css">

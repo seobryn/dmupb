@@ -4,12 +4,19 @@
 <div id="popup_message" title="ERROR">
 	<p>Usuario/Contrase&ntilde;a Incorrectos</p>
 </div>
+<?php }?>
+<?php  if(isset($_GET['log']) && !empty($_GET['log'])){
+	@session_destroy();
+	?>
+<div id="popup_message" title="SALIR">
+	<p>Ha cerrado sesion!.</p>
+</div>
+<?php }?>
 <script>
 $(function() {
     $( "#popup_message" ).dialog();
   });
 </script>
-<?php }?>
 <table>
 	<tr>
 		<td>
@@ -37,8 +44,6 @@ $(function() {
 						<li><input class="btn" onmouseover="this.className='btn_over'"
 							onmouseout="this.className='btn'" id="btn_login" name="sup_inp"
 							type="submit" value="Ingresar" />
-						</li>
-						<li><a class="register" href="index.php?controller=register">Registrarse</a>
 						</li>
 					</ul>
 

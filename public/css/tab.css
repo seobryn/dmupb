@@ -1,0 +1,17 @@
+.tabs_container {
+	position: relative;
+	width: 500px;
+	height: auto;
+}
+
+.tabs_container ul,li {
+	list-style: none;
+	display: inline;
+}
+
+div.tabs_content {
+	position: relative;
+	width: 1000px;
+	margin: auto;
+	height: auto;
+}

@@ -55,7 +55,7 @@ class GKmodes {
 		return false;
 	}
 
-	private function assign_centroids($data,$centroids){
+	private function assign_centroids($data,$centroids){ // this method assign all register for each centroid
 		$map = array();
 		foreach ($data as $row){
 			$min_distance = null;
