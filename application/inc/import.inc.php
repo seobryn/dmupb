@@ -6,7 +6,7 @@ if($_GET['controller']=='login'){
 	require_once '../application/controller/Login_Controller.class.php';
 }
 if($_GET['controller']=='consult'){
-	if($_GET['method']=='exec'){
+	if($_GET['method']=='exec' ||$_GET['method']=='load'){
 		require_once '../application/model/Data.class.php';
 		require_once '../application/model/Utils.class.php';
 		require_once '../application/model/FileRead.class.php';
@@ -21,5 +21,8 @@ if($_GET['controller']=='consult'){
 }
 if($_GET['controller']=='home'){
 	require_once '../application/controller/Home_Controller.class.php';
+}
+if($_GET['controller']=='register'){
+	require_once '../application/controller/Register_Controller.class.php';
 }
 ?>

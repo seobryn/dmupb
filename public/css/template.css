@@ -330,6 +330,7 @@ body .content {
 	font-size: 14x;
 	background-color: #242424;
 	color: #19E8FF;
+	text-align: left;
 }
 
 .tr_one {
@@ -338,13 +339,13 @@ body .content {
 
 .table_50 {
 	position: relative;
-	width: 60px;
+	width: 64px;
 	border: 1px solid transparent;
 }
 
 .table_100 {
 	position: relative;
-	width: 100px;
+	width: 90px;
 	border: 1px solid transparent;
 }
 
@@ -453,4 +454,8 @@ body .content {
 	width: 220px;
 	height: auto;
 	padding-top: 5px;
+}
+
+.canvas_tbl {
+	background-color: black;
 }

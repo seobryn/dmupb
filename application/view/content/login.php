@@ -5,13 +5,6 @@
 	<p>Usuario/Contrase&ntilde;a Incorrectos</p>
 </div>
 <?php }?>
-<?php  if(isset($_GET['log']) && !empty($_GET['log'])){
-	@session_destroy();
-	?>
-<div id="popup_message" title="SALIR">
-	<p>Ha cerrado sesion!.</p>
-</div>
-<?php }?>
 <script>
 $(function() {
     $( "#popup_message" ).dialog();

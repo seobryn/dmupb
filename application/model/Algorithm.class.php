@@ -14,7 +14,7 @@ class Algorithm{
 			exit();
 		}
 		if(!isset($maxit) || ($maxit=="") || empty($maxit)){
-			$this->iterations = 20;
+			$this->iterations = 40;
 		}else{
 			$this->iterations = $maxit;
 		}

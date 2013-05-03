@@ -31,7 +31,7 @@ class Consult_Controller extends View_Controller {
 				</script><script>
 				$(document).ready(function(){
 				$("ul.tabs").jTabs({content: ".tabs_content"});});
-				</script>');
+				</script><script src="js/gen_predict.js"></script><script src="js/draw_canvas.js"></script>');
 		$this->results = array();
 	}
 
@@ -41,7 +41,7 @@ class Consult_Controller extends View_Controller {
 
 	public function exec(){
 		$temp_file = new FileRead();
-		$array_data = $temp_file->read($_FILES['file_inp']['tmp_name'],"num");
+		$array_data = $temp_file->read($_FILES['file_inp']['tmp_name'],$_POST['pre_sel']);
 		$array_data = Utils::clean_data($array_data);
 		$alg = $_POST['alg_inp'];
 		$algorithm = new $alg($array_data,40,6);
@@ -51,6 +51,13 @@ class Consult_Controller extends View_Controller {
 
 	public function getResults(){
 		return $this->results;
+	}
+
+	public function load(){
+		$temp_file = new FileRead();
+		$array_data = $temp_file->read($_FILES['file_inp']['tmp_name'],"");
+		$this->results = $array_data;
+		return $this->deploy();
 	}
 }
 
