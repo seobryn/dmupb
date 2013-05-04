@@ -34,8 +34,16 @@ class Data {
 	public function getPredictValue(){
 		return $this->predict_field;
 	}
-	
+
 	public function getIndex(){
 		return $this->index;
+	}
+
+	public function toString(){
+		$out = "";
+		foreach($this->parameters as $param=>$value){
+			$out.=$param.": $value ";
+		}
+		return $out;
 	}
 }

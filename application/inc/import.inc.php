@@ -25,4 +25,7 @@ if($_GET['controller']=='home'){
 if($_GET['controller']=='register'){
 	require_once '../application/controller/Register_Controller.class.php';
 }
+if($_GET['controller']=='document'){
+	require_once '../application/controller/Document_Controller.class.php';
+}
 ?>

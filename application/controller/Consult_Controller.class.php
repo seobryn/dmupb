@@ -44,7 +44,7 @@ class Consult_Controller extends View_Controller {
 		$array_data = $temp_file->read($_FILES['file_inp']['tmp_name'],$_POST['pre_sel']);
 		$array_data = Utils::clean_data($array_data);
 		$alg = $_POST['alg_inp'];
-		$algorithm = new $alg($array_data,40,6);
+		$algorithm = new $alg($array_data,20,$_POST['cent_sel']);
 		$this->results = $algorithm->start_algorithm();
 		return $this->deploy();
 	}

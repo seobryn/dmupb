@@ -24,7 +24,7 @@
 							<?php if($_SESSION['usr_type']=='admin'){?>
 							<td><a href="index.php?controller=register">REGISTRO</a> <?php }?>
 							</td>
-							<td><a href="index.php?controller=docs">DOCUMENTACIÓN</a>
+							<td><a href="index.php?controller=document">DOCUMENTACIÓN</a>
 							</td>
 							<?php if(isset($_SESSION['account']) && !empty($_SESSION['account'])){?>
 							<td><a href="index.php?controller=login&method=logout">SALIR</a>

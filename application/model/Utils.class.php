@@ -60,5 +60,9 @@ class Utils{
 		}
 		return $result;
 	}
+
+	public static function prom($array){
+		return array_sum($array)/sizeof($array);
+	}
 }
 ?>

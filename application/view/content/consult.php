@@ -40,6 +40,7 @@
 		$index_inter = $results['index_inter'];
 		$indexes = $results['indexes'];
 		$parameters = $centroids[0]->getParameters();
+		$col=round($_POST['cent_sel']/3,0);
 	}else{
 		$results = $controller->getResults();
 		$parameters = $results[0]->getParameters();
@@ -82,6 +83,16 @@
 								<?php } ?>
 						</select>
 						</li>
+						<li><label>Centroides</label></li>
+						<li><select name="cent_sel" class="login_inp">
+								<option>Seleccionar...</option>
+								<?php for($i=2;$i<=9;$i++){ ?>
+								<option value="<?php echo $i; ?>">
+									<?php echo $i; ?>
+								</option>
+								<?php } ?>
+						</select>
+						</li>
 						<li><input class="btn" onmouseover="this.className='btn_over'"
 							onmouseout="this.className='btn'" id="btn_cons" name="sup_inp"
 							type="submit" value="Generar" /></li>
@@ -103,13 +114,14 @@
 <div class="slidingDiv">
 	<div class="tabs_container">
 		<ul class="tabs">
-			<li class="active"><a href="#">Gr&aacute;fica</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;1</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;2</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;3</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;4</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;5</a></li>
-			<li class="active"><a href="#">Centroide&nbsp;6</a></li>
+			<li class="active"><a href="#">Gráfica</a></li>
+			<?php for($i=0;$i< sizeof($centroids);$i++){
+				?>
+			<li class="active"><a href="#">Centroide&nbsp;<?php echo ($i+1); ?>
+			</a></li>
+			<?php 
+			}
+			?>
 		</ul>
 	</div>
 	<div class="clear"></div>
@@ -122,72 +134,64 @@
 					<?php echo $algorithms[$_POST['alg_inp']];?>
 				</h2>
 				<h3>Gr&aacute;fica</h3>
-
+				<h3 class="indexes">
+					Indice General Entre Clusters:
+					<?php echo Utils::prom($index_inter);?>
+				</h3>
 				<table class="canvas_tbl">
+					<?php
+					$cont=1;
+					for($i=0;$i<$col;$i++){
+
+						?>
 					<tr>
-						<td>
-							<canvas id="cent1"></canvas>
+						<?php
+						$x =  round((sizeof($centroids)/$col),0);
+						for($j=0;$j<$x;$j++){
+						if($cont<=sizeof($centroids)){?>
+						<td><canvas
+								title='<?php echo "Centroide #".$cont.": ".$centroids[($cont-1)]->toString(); ?>'
+								id='<?php echo "cent".($cont);?>'></canvas>
 						</td>
-						<td>
-							<canvas id="cent2"></canvas>
-						</td>
-						<td>
-							<canvas id="cent3"></canvas>
-						</td>
+						<?php
+						$cont++;
+						}
+					}?>
 					</tr>
-					<tr>
-						<td>
-							<canvas id="cent4"></canvas>
-						</td>
-						<td>
-							<canvas id="cent5"></canvas>
-						</td>
-						<td>
-							<canvas id="cent6"></canvas>
-						</td>
-					</tr>
+					<?php }
+					?>
 				</table>
 			</div>
-			<script type="text/javascript">
-		<!-- INICIO PINTAR CANVAS -->
-		paint("cent1",0,0,"#03C8DE",4,1);
-		<?php foreach($clusters[0] as $register){ ?>
-		paint("cent1",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"#91F4FF",2,0);
-		<?php }?>
-		paint("cent2",0,0,"red",4,1);
-		<?php foreach($clusters[1] as $register){ ?>
-		paint("cent2",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"red ",2,0);
-		<?php }?>
-		paint("cent3",0,0,"white",4,1);
-		<?php foreach($clusters[2] as $register){ ?>
-		paint("cent3",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"white",2,0);
-		<?php }?>
-		paint("cent4",0,0,"green",4,1);
-		<?php foreach($clusters[3] as $register){ ?>
-		paint("cent4",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"green",2,0);
-		<?php }?>
-		paint("cent5",0,0,"aqua",4,1);
-		<?php foreach($clusters[4] as $register){ ?>
-		paint("cent5",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"aqua",2,0);
-		<?php }?>
-		paint("cent6",0,0,"blue",4,1);
-		<?php foreach($clusters[5] as $register){ ?>
-		paint("cent6",<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"blue",2,0);
-		<?php }?>
-		
-		<!-- FIN PINTAR CANVAS -->
+			<!-- INICIO PINTAR CANVAS -->
+			<script>
+		<?php 
+		$colors = array(0=>"blue",1=>"green",2=>"red",3=>"yellow",4=>"orange",5=>"aqua",6=>"purple",7=>"#187486",8=>"#abcd12");
+			for($i=0;$i < sizeof($centroids);$i++){ 
+				?>
+				paint('<?php echo "cent".($i+1); ?>',0,0,"<?php echo $colors[$i]; ?>",4,1);		
+				<?php foreach($clusters[$i] as $register){ ?>
+				paint('<?php echo "cent".($i+1); ?>',<?php echo rand(-70,70); ?>,<?php echo rand(-70,70); ?>,"<?php echo $colors[$i]; ?>",2,0);
+				<?php 
+					}
+			} ?>
 		</script>
+			<!-- FIN PINTAR CANVAS -->
 		</div>
 		<!-- END TAB 1 -->
+
+		<?php for($i=0;$i<sizeof($centroids);$i++){ ?>
 		<div>
-			<!-- START TAB 2 -->
+			<!-- START TAB  -->
 			<div class="centroid_container">
 				<!-- START Lista de informacion del centroid -->
 				<table>
 					<tbody>
 						<tr>
 							<td><div class="centroid_info">
-									<H4>Información del Centriode 1</H4>
+									<H4>
+										Información del Centriode
+										<?php echo ($i+1);?>
+									</H4>
 									<!-- Numero del centroid -->
 									<table>
 										<tr valign="top">
@@ -237,158 +241,18 @@
 												<div class="ul_centroid">
 													<ul>
 														<!-- Informacion del centroid -->
-														<li><b>[1] RESPECTO A [2] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][1],2);?><br />
-														</li>
-														<li><b>[1] RESPECTO A [3] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][2],2);?><br />
-														</li>
-														<li><b>[1] RESPECTO A [4] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][3],2);?><br />
-														</li>
-														<li><b>[1] RESPECTO A [5] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][4],2);?><br />
-														</li>
-														<li><b>[1] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][5],2);?><br />
-														</li>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<ul>
-
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[0],2);?>
-														</li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-						</tr>
-					</tbody>
-
-					<!-- FINISH Lista de informacion del centroid -->
-				</table>
-
-			</div>
-
-			<div class="main_table" id="title_table">
-				<!-- Encabezado de la tabla, no tocar -->
-				<table>
-					<tr class="tr_title">
-						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
-								?>
-						<th><div class="table_100">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php
-							}else{
-								?>
-						<th><div class="table_50">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php }
-} ?>
-					</tr>
-				</table>
-			</div>
-			<div class="main_table">
-				<div class="main_table">
-					<!-- Datos del cluster -->
-					<?php $count = 0;?>
-					<table>
-						<?php
-						foreach ($clusters[0] as $register){
-							if($count==0){
-								echo '<tr class="tr_one">';
-								foreach ($parameters as $parameter){
-									?>
-						<td class="table_50"><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php } echo '</tr>'; $count=1;
-							}else{
-								echo '<tr>';
-								foreach ($parameters as $parameter){
-									?>
-						<td><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php }echo'</tr>';$count=0; 
-							}
-						}?>
-					</table>
-				</div>
-				<!-- END  main_table -->
-			</div>
-
-		</div>
-		<!-- END TAB 2 -->
-		<div>
-			<!-- START TAB 3 -->
-			<div class="centroid_container">
-				<!-- START Lista de informacion del centroid -->
-				<table>
-					<tbody>
-						<tr>
-							<td><div class="centroid_info">
-									<H4>Información del Centriode 2</H4>
-									<!-- Numero del centroid -->
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
 														<?php
-													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[1]->getParameter($parameter);
-														if($parameter=="restecg"){
-															break;
-														} ?></li>
+														foreach($indexes as $key=>$value){
+															foreach ($value as $key_val=>$val){
+																if(($key==$i)||($key<=$i && $key_val==$i)){
+																	?>
+														<li><b>[<?php echo ($key+1); ?>] RESPECTO A [<?php echo ($key_val+1); ?>]
+																=
+														</b>&nbsp;&nbsp;<?php echo round($indexes[$key][$key_val],2);?><br />
+														</li>
 														<?php }
-														$centinel=false;
-														?>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-														foreach ($parameters as $parameter){
-														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[1]->getParameter($parameter);
-														?>
-														</li>
-														<?php }else{
-															if($parameter=="restecg"){
-																$centinel=true;
 															}
-														}
-}?>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-							<td><div class="centroid_info1">
-									<H4>Distrancia Intra/Extra-cluster</H4>
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<ul>
-														<!-- Informacion del centroid -->
-														<li><b>[2] RESPECTO A [1] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][1],2);?><br />
-														</li>
-														<li><b>[2] RESPECTO A [3] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][2],2);?><br />
-														</li>
-														<li><b>[2] RESPECTO A [4] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][3],2);?><br />
-														</li>
-														<li><b>[2] RESPECTO A [5] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][4],2);?><br />
-														</li>
-														<li><b>[2] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][5],2);?><br />
-														</li>
+														}?>
 													</ul>
 												</div>
 											</td>
@@ -396,7 +260,7 @@
 												<div class="ul_centroid">
 													<ul>
 
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[1],2);?>
+														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[$i],2);?>
 														</li>
 													</ul>
 												</div>
@@ -417,7 +281,7 @@
 				<table>
 					<tr class="tr_title">
 						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
+							if($parameter=="restecg"){
 								?>
 						<th><div class="table_100">
 								<?php echo strtoupper($parameter); ?>
@@ -439,7 +303,7 @@
 					<?php $count = 0;?>
 					<table>
 						<?php
-						foreach ($clusters[1] as $register){
+						foreach ($clusters[$i] as $register){
 							if($count==0){
 								echo '<tr class="tr_one">';
 								foreach ($parameters as $parameter){
@@ -460,577 +324,8 @@
 				</div>
 				<!-- END  main_table -->
 			</div>
-
 		</div>
-		<!-- END TAB 3 -->
-		<!-- START TAB 4 -->
-		<div>
-			<div class="centroid_container">
-				<!-- START Lista de informacion del centroid -->
-				<table>
-					<tbody>
-						<tr>
-							<td><div class="centroid_info">
-									<H4>Información del Centriode 3</H4>
-									<!-- Numero del centroid -->
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[2]->getParameter($parameter);
-														if($parameter=="restecg"){
-															break;
-														} ?></li>
-														<?php }
-														$centinel=false;
-														?>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-														foreach ($parameters as $parameter){
-														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[2]->getParameter($parameter);
-														?>
-														</li>
-														<?php }else{
-															if($parameter=="restecg"){
-																$centinel=true;
-															}
-														}
-}?>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-							<td><div class="centroid_info1">
-									<H4>Distrancia Intra/Extra-cluster</H4>
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<ul>
-														<!-- Informacion del centroid -->
-														<li><b>[3] RESPECTO A [1] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][2],2);?><br />
-														</li>
-														<li><b>[3] RESPECTO A [2] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][2],2);?><br />
-														</li>
-														<li><b>[3] RESPECTO A [4] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][3],2);?><br />
-														</li>
-														<li><b>[3] RESPECTO A [5] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][4],2);?><br />
-														</li>
-														<li><b>[3] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][5],2);?><br />
-														</li>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<ul>
-
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[2],2);?>
-														</li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-						</tr>
-					</tbody>
-
-					<!-- FINISH Lista de informacion del centroid -->
-				</table>
-
-			</div>
-
-			<div class="main_table" id="title_table">
-				<!-- Encabezado de la tabla, no tocar -->
-				<table>
-					<tr class="tr_title">
-						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
-								?>
-						<th><div class="table_100">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php
-							}else{
-								?>
-						<th><div class="table_50">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php }
-} ?>
-					</tr>
-				</table>
-			</div>
-			<div class="main_table">
-				<div class="main_table">
-					<!-- Datos del cluster -->
-					<?php $count = 0;?>
-					<table>
-						<?php
-						foreach ($clusters[2] as $register){
-							if($count==0){
-								echo '<tr class="tr_one">';
-								foreach ($parameters as $parameter){
-									?>
-						<td class="table_50"><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php } echo '</tr>'; $count=1;
-							}else{
-								echo '<tr>';
-								foreach ($parameters as $parameter){
-									?>
-						<td><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php }echo'</tr>';$count=0; 
-							}
-						}?>
-					</table>
-				</div>
-				<!-- END  main_table -->
-			</div>
-
-		</div>
-		<!-- END TAB 4 -->
-		<!-- START TAB 5 -->
-		<div>
-			<div class="centroid_container">
-				<!-- START Lista de informacion del centroid -->
-				<table>
-					<tbody>
-						<tr>
-							<td><div class="centroid_info">
-									<H4>Información del Centriode 4</H4>
-									<!-- Numero del centroid -->
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[3]->getParameter($parameter);
-														if($parameter=="restecg"){
-															break;
-														} ?></li>
-														<?php }
-														$centinel=false;
-														?>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-														foreach ($parameters as $parameter){
-														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[3]->getParameter($parameter);
-														?>
-														</li>
-														<?php }else{
-															if($parameter=="restecg"){
-																$centinel=true;
-															}
-														}
-}?>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-							<td><div class="centroid_info1">
-									<H4>Distrancia Intra/Extra-cluster</H4>
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<ul>
-														<!-- Informacion del centroid -->
-														<li><b>[4] RESPECTO A [1] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][3],2);?><br />
-														</li>
-														<li><b>[4] RESPECTO A [2] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][3],2);?><br />
-														</li>
-														<li><b>[4] RESPECTO A [3] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][3],2);?><br />
-														</li>
-														<li><b>[4] RESPECTO A [5] = </b>&nbsp;&nbsp;<?php echo round($indexes[3][4],2);?><br />
-														</li>
-														<li><b>[4] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[3][5],2);?><br />
-														</li>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<ul>
-
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[3],2);?>
-														</li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-						</tr>
-					</tbody>
-
-					<!-- FINISH Lista de informacion del centroid -->
-				</table>
-
-			</div>
-
-			<div class="main_table" id="title_table">
-				<!-- Encabezado de la tabla, no tocar -->
-				<table>
-					<tr class="tr_title">
-						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
-								?>
-						<th><div class="table_100">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php
-							}else{
-								?>
-						<th><div class="table_50">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php }
-} ?>
-					</tr>
-				</table>
-			</div>
-			<div class="main_table">
-				<div class="main_table">
-					<!-- Datos del cluster -->
-					<?php $count = 0;?>
-					<table>
-						<?php
-						foreach ($clusters[3] as $register){
-							if($count==0){
-								echo '<tr class="tr_one">';
-								foreach ($parameters as $parameter){
-									?>
-						<td class="table_50"><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php } echo '</tr>'; $count=1;
-							}else{
-								echo '<tr>';
-								foreach ($parameters as $parameter){
-									?>
-						<td><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php }echo'</tr>';$count=0; 
-							}
-						}?>
-					</table>
-				</div>
-				<!-- END  main_table -->
-			</div>
-
-		</div>
-		<!-- END TAB 5 -->
-		<!-- START TAB 6 -->
-		<div>
-			<div class="centroid_container">
-				<!-- START Lista de informacion del centroid -->
-				<table>
-					<tbody>
-						<tr>
-							<td><div class="centroid_info">
-									<H4>Información del Centriode 5</H4>
-									<!-- Numero del centroid -->
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[4]->getParameter($parameter);
-														if($parameter=="restecg"){
-															break;
-														} ?></li>
-														<?php }
-														$centinel=false;
-														?>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-														foreach ($parameters as $parameter){
-														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[4]->getParameter($parameter);
-														?>
-														</li>
-														<?php }else{
-															if($parameter=="restecg"){
-																$centinel=true;
-															}
-														}
-}?>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-							<td><div class="centroid_info1">
-									<H4>Distrancia Intra/Extra-cluster</H4>
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<ul>
-														<!-- Informacion del centroid -->
-														<li><b>[5] RESPECTO A [1] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][4],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [2] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][4],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [3] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][4],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [4] = </b>&nbsp;&nbsp;<?php echo round($indexes[3][4],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[4][5],2);?><br />
-														</li>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<ul>
-
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[0],2);?>
-														</li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-						</tr>
-					</tbody>
-
-					<!-- FINISH Lista de informacion del centroid -->
-				</table>
-
-			</div>
-
-			<div class="main_table" id="title_table">
-				<!-- Encabezado de la tabla, no tocar -->
-				<table>
-					<tr class="tr_title">
-						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
-								?>
-						<th><div class="table_100">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php
-							}else{
-								?>
-						<th><div class="table_50">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php }
-} ?>
-					</tr>
-				</table>
-			</div>
-			<div class="main_table">
-				<div class="main_table">
-					<!-- Datos del cluster -->
-					<?php $count = 0;?>
-					<table>
-						<?php
-						foreach ($clusters[4] as $register){
-							if($count==0){
-								echo '<tr class="tr_one">';
-								foreach ($parameters as $parameter){
-									?>
-						<td class="table_50"><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php } echo '</tr>'; $count=1;
-							}else{
-								echo '<tr>';
-								foreach ($parameters as $parameter){
-									?>
-						<td><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php }echo'</tr>';$count=0; 
-							}
-						}?>
-					</table>
-				</div>
-				<!-- END  main_table -->
-			</div>
-
-		</div>
-		<!-- END TAB 6 -->
-		<!-- START TAB 7 -->
-		<div>
-			<div class="centroid_container">
-				<!-- START Lista de informacion del centroid -->
-				<table>
-					<tbody>
-						<tr>
-							<td><div class="centroid_info">
-									<H4>Información del Centriode 6</H4>
-									<!-- Numero del centroid -->
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[5]->getParameter($parameter);
-														if($parameter=="restecg"){
-															break;
-														} ?></li>
-														<?php }
-														$centinel=false;
-														?>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<!-- Informacion del centroid -->
-													<ul>
-														<?php
-														foreach ($parameters as $parameter){
-														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[5]->getParameter($parameter);
-														?>
-														</li>
-														<?php }else{
-															if($parameter=="restecg"){
-																$centinel=true;
-															}
-														}
-}?>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-							<td><div class="centroid_info1">
-									<H4>Distrancia Intra/Extra-cluster</H4>
-									<table>
-										<tr valign="top">
-											<td>
-												<div class="ul_centroid">
-													<ul>
-														<!-- Informacion del centroid -->
-														<li><b>[5] RESPECTO A [1] = </b>&nbsp;&nbsp;<?php echo round($indexes[0][5],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [2] = </b>&nbsp;&nbsp;<?php echo round($indexes[1][5],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [3] = </b>&nbsp;&nbsp;<?php echo round($indexes[2][5],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [4] = </b>&nbsp;&nbsp;<?php echo round($indexes[3][5],2);?><br />
-														</li>
-														<li><b>[5] RESPECTO A [6] = </b>&nbsp;&nbsp;<?php echo round($indexes[4][5],2);?><br />
-														</li>
-													</ul>
-												</div>
-											</td>
-											<td>
-												<div class="ul_centroid">
-													<ul>
-
-														<li><b>INTRA CLUSTER = </b>&nbsp;&nbsp;<?php echo round($index_inter[5],2);?>
-														</li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div></td>
-						</tr>
-					</tbody>
-
-					<!-- FINISH Lista de informacion del centroid -->
-				</table>
-
-			</div>
-
-			<div class="main_table" id="title_table">
-				<!-- Encabezado de la tabla, no tocar -->
-				<table>
-					<tr class="tr_title">
-						<?php foreach ($parameters as $parameter){
-							if($parameter=="fbs"){
-								?>
-						<th><div class="table_100">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php
-							}else{
-								?>
-						<th><div class="table_50">
-								<?php echo strtoupper($parameter); ?>
-							</div></th>
-						<?php }
-} ?>
-					</tr>
-				</table>
-			</div>
-			<div class="main_table">
-				<div class="main_table">
-					<!-- Datos del cluster -->
-					<?php $count = 0;?>
-					<table>
-						<?php
-						foreach ($clusters[5] as $register){
-							if($count==0){
-								echo '<tr class="tr_one">';
-								foreach ($parameters as $parameter){
-									?>
-						<td class="table_50"><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php } echo '</tr>'; $count=1;
-							}else{
-								echo '<tr>';
-								foreach ($parameters as $parameter){
-									?>
-						<td><?php echo $register->getParameter($parameter);?>
-						</td>
-						<?php }echo'</tr>';$count=0; 
-							}
-						}?>
-					</table>
-				</div>
-				<!-- END  main_table -->
-			</div>
-
-		</div>
-		<!-- END TAB 7 -->
+		<?php }?>
 	</div>
 	<!-- END TAB_CONTENTS 2 -->
 </div>
