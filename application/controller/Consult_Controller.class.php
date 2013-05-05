@@ -31,7 +31,7 @@ class Consult_Controller extends View_Controller {
 				</script><script>
 				$(document).ready(function(){
 				$("ul.tabs").jTabs({content: ".tabs_content"});});
-				</script><script src="js/gen_predict.js"></script><script src="js/draw_canvas.js"></script>');
+				</script><script src="js/gen_predict.js"></script><script src="js/draw_canvas.js"></script><script src="js/box-over.js"></script>');
 		$this->results = array();
 	}
 

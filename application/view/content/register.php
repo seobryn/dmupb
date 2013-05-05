@@ -1,6 +1,7 @@
 <?php
-$id = $controller->getIdRegister();
-if(isset($id) && !empty($id)){
+if(!empty($_SESSION['account']) && isset($_SESSION['account'])){
+	$id = $controller->getIdRegister();
+	if(isset($id) && !empty($id)){
 	if($id>=0){?>
 <div id="popup_message" title="AGREGAR USUARIO">
 	<p>Usuario Agregado Correctamente</p>
@@ -83,3 +84,7 @@ $(function() {
 		</td>
 	</tr>
 </table>
+<?php }else{
+	header("Location: index.php?controller=home");
+}
+?>

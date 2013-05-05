@@ -6,8 +6,8 @@ function paint(id_canv, coordx, coordy, color, rad, line) {
 	var radius = rad;
 	context.save();
 	context.translate(canvas.width / 2, canvas.height / 2);
-	context.scale(2, 1);
 	context.beginPath();
+	context.scale(2, 1);
 	context.arc(cX, cY, radius, 0, 2 * Math.PI, false);
 	context.restore();
 	context.fillStyle = color;

@@ -41,6 +41,7 @@
 		$indexes = $results['indexes'];
 		$parameters = $centroids[0]->getParameters();
 		$col=round($_POST['cent_sel']/3,0);
+		$size = $results['size'];
 	}else{
 		$results = $controller->getResults();
 		$parameters = $results[0]->getParameters();
@@ -148,14 +149,15 @@
 						<?php
 						$x =  round((sizeof($centroids)/$col),0);
 						for($j=0;$j<$x;$j++){
-						if($cont<=sizeof($centroids)){?>
+							if($cont<=sizeof($centroids)){
+								$scluster = count($clusters[($cont-1)]);
+								?>
 						<td><canvas
-								title='<?php echo "Centroide #".$cont.": ".$centroids[($cont-1)]->toString(); ?>'
-								id='<?php echo "cent".($cont);?>'></canvas>
-						</td>
+								title='header=[<?php echo "Centroide #".$cont.": ( ".$scluster." / ".$size.") => ".round(($scluster/$size)*100)."%"; ?>] body=[<?php echo $centroids[($cont-1)]->toString(); ?>]'
+								id='<?php echo "cent".($cont);?>'></canvas></td>
 						<?php
 						$cont++;
-						}
+							}
 					}?>
 					</tr>
 					<?php }
@@ -201,7 +203,7 @@
 													<ul>
 														<?php
 													foreach ($parameters as $parameter){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[0]->getParameter($parameter);
+														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[$i]->getParameter($parameter);
 														if($parameter=="restecg"){
 															break;
 														} ?></li>
@@ -218,7 +220,7 @@
 														<?php
 														foreach ($parameters as $parameter){
 														if ($centinel==true){?>
-														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[0]->getParameter($parameter);
+														<li><b><?php echo strtoupper($parameter);?>:</b>&nbsp;<?php echo $centroids[$i]->getParameter($parameter);
 														?>
 														</li>
 														<?php }else{

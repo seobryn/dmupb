@@ -1,5 +1,5 @@
 <?php
-//THIS CLASS IS FOR KMEANS ALGORITHM
+//THIS CLASS IS FOR GKMODES ALGORITHM
 class GKmodes {
 
 	private $data; 			//all data set
@@ -9,7 +9,7 @@ class GKmodes {
 	private $result;		//formatted results
 	private $chaged;		//boolean flag
 
-	//CONSTRUCTOR OF K-MODES ALGORITHM
+	//CONSTRUCTOR OF GK-MODES ALGORITHM
 	public function GKmodes($data_set/*data set read by archive file*/,$max_iterations/*max cycles*/,$k/*number of centroids*/){
 		if(!isset($data_set)){
 			echo "ERROR: Data set is necessary to run the algorithm.<br/>Please, Try again with all required data.";
@@ -29,6 +29,10 @@ class GKmodes {
 		}
 		$this->result = array();
 		$this->changed = false;
+	}
+
+	public function get_len(){
+		return sizeof($this->data);
 	}
 
 	private function init_centroids(){			//initialize the first centroids
@@ -140,6 +144,7 @@ class GKmodes {
 		$final = $this->generateIndexes($map);
 		$this->result['index_inter'] = $final[0];
 		$this->result['indexes'] = $final[1];
+		$this->result['size'] = $this->get_len();
 		return $this->result;
 	}
 

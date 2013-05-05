@@ -40,10 +40,19 @@ class Data {
 	}
 
 	public function toString(){
-		$out = "";
+		$out = "<table>";
+		$cont=0;
 		foreach($this->parameters as $param=>$value){
-			$out.=$param.": $value ";
+			if($cont==0){
+				$out.="<tr>";
+			}
+			$out.="<td>".$param."&nbsp;:$value</td>";
+			if ($cont==1){
+				$out.="</tr>";
+				$cont=-1;
+			}
+			$cont++;
 		}
-		return $out;
+		return $out."</table>";
 	}
 }

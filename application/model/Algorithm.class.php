@@ -136,6 +136,7 @@ class Algorithm{
 		$final = $this->generateIndexes($map);
 		$this->result['index_inter'] = $final[0];
 		$this->result['indexes'] = $final[1];
+		$this->result['size']=$this->get_len();
 		return $this->result;
 	}
 
@@ -159,6 +160,11 @@ class Algorithm{
 		}
 		$total[1] = $indexes; //EXTRA CLUSTER
 		return $total;
+	}
+
+	public function get_len(){
+		return sizeof($this->data);
+
 	}
 }
 ?>
